@@ -13,7 +13,8 @@ NOTES = ROOT / "notes"
 REQUIRED_HEADINGS = ["## 本講重點總覽", "## 名詞對照表", "## 自我檢核"]
 REQUIRED_FILES = ["AGENTS.md", "CLAUDE.md", "index.html", "lesson.html",
                   "glossary.html", "about.html", "assets/style.css",
-                  "assets/common.js", ".nojekyll", "templates/lecture-template.md"]
+                  "assets/common.js", ".nojekyll", "templates/lecture-template.md",
+                  "templates/mishearings.md"]
 
 EMAIL_RE = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)+")
 PHONE_RE = re.compile(r"09\d{2}-?\d{3}-?\d{3}")
