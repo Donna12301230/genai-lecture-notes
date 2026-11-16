@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>生成式 AI 課程講義</title>
+  <meta name="description" content="生成式 AI 文字與圖像課程的個人講義網站：每一講的投影片重點、老師補充、名詞對照與自我檢核。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=Noto+Serif+TC:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <p class="eyebrow" id="term">課程筆記</p>
+      <h1>生成式 AI 文字與圖像<br>一講一頁的複習講義</h1>
+      <p>依投影片架構整理每一講的重點，穿插老師上課的口頭補充（黃色便利貼），最後附名詞對照表與自我檢核題。每上完一講，就照同一套規則新增一頁。</p>
+      <div class="stats">
+        <div><b id="stat-lessons">–</b><span>已整理講次</span></div>
+        <div><b id="stat-quiz">–</b><span>已勾選「我會了」</span></div>
+      </div>
+    </section>
+
+    <div class="toolbar">
+      <input class="search" id="search" type="search" placeholder="搜尋標題或關鍵字，例如 RAG、Transformer" aria-label="搜尋講義">
+      <span class="count" id="count"></span>
+    </div>
+    <ul class="cards" id="cards"><li class="loading">載入講義目錄中…</li></ul>
+  </main>
+
+  <script src="assets/common.js"></script>
+  <script>
+    renderChrome("home");
+    const cardsEl = document.getElementById("cards");
+
+    function progress(id) {
+      const total = +(store(`quiz-${id}-total`) || 0);
+      const done = +(store(`quiz-${id}-done`) || 0);
+      return { total, done };
+    }
+
+    function card(l) {
+      const p = progress(l.id);
+      const prog = p.total ? `<span class="progress">自我檢核 ${p.done} / ${p.total}</span>` : "";
+      return `<li><a class="card" href="lesson.html?id=${esc(l.id)}">
+        <span class="num">第 ${esc(l.id)} 講</span>
+        <h2>${esc(l.title)}</h2>
+        <p class="sub">${esc(l.subtitle)}</p>
+        <p class="sum">${esc(l.summary)}</p>
+        <span class="tags">${l.tags.map((t) => `<span class="tag">${esc(t)}</span>`).join("")}</span>
+        ${prog}
+      </a></li>`;
+    }
+
+    loadLessons().then((data) => {
+      const lessons = data.lessons;
+      document.getElementById("term").textContent = `${data.course}｜${data.term}`;
+      document.getElementById("stat-lessons").textContent = lessons.length;
+      const done = lessons.reduce((s, l) => s + progress(l.id).done, 0);
+      const total = lessons.reduce((s, l) => s + progress(l.id).total, 0);
+      document.getElementById("stat-quiz").textContent = total ? `${done} 題` : "0 題";
+
+      const search = document.getElementById("search");
+      const draw = () => {
+        const q = search.value.trim().toLowerCase();
+        const hit = lessons.filter((l) =>
+          !q || [l.id, l.title, l.subtitle, l.summary, ...l.tags].join(" ").toLowerCase().includes(q));
+        cardsEl.innerHTML = hit.length ? hit.map(card).join("") : `<li class="empty">找不到符合「${esc(search.value)}」的講義。</li>`;
+        document.getElementById("count").textContent = q ? `找到 ${hit.length} 講` : `共 ${lessons.length} 講`;
+      };
+      search.addEventListener("input", draw);
+      draw();
+    }).catch((e) => {
+      cardsEl.innerHTML = `<li class="empty">${esc(e.message)}。如果是直接雙擊打開檔案，請改用本機伺服器預覽（見 README）。</li>`;
+    });
+  </script>
+</body>
+</html>

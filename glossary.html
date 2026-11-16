@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>名詞總表｜生成式 AI 課程講義</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=Noto+Serif+TC:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <p class="eyebrow">名詞總表</p>
+      <h1>所有講次的名詞，一次查</h1>
+      <p>自動彙整每一講最後的「名詞對照表」。新增一講後，這裡會自己多出新的名詞，不用另外維護。</p>
+    </section>
+    <div class="toolbar">
+      <input class="search" id="search" type="search" placeholder="搜尋名詞或說明，例如 embedding、幻覺" aria-label="搜尋名詞">
+      <span class="count" id="count"></span>
+    </div>
+    <div class="article" style="max-width:none">
+      <div class="table-wrap">
+        <table class="gloss-table">
+          <thead><tr><th>名詞</th><th>說明</th><th>出處</th></tr></thead>
+          <tbody id="rows"><tr><td colspan="3" class="loading">彙整中…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script src="assets/common.js"></script>
+  <script>
+    renderChrome("glossary");
+    const rowsEl = document.getElementById("rows");
+
+    (async () => {
+      const { lessons } = await loadLessons();
+      const notes = await Promise.all(lessons.map((l) => loadNote(l.id).catch(() => "")));
+      const all = [];
+      lessons.forEach((l, i) => parseGlossary(notes[i]).forEach((r) => all.push({ ...r, id: l.id })));
+
+      const html = all.map((r) => ({
+        text: `${r.term} ${r.desc}`.toLowerCase(),
+        row: `<tr><td>${renderInline(r.term)}</td><td>${renderInline(r.desc)}</td>
+              <td><a href="lesson.html?id=${r.id}#glossary">第 ${r.id} 講</a></td></tr>`,
+      }));
+      const search = document.getElementById("search");
+      const draw = () => {
+        const q = search.value.trim().toLowerCase();
+        const hit = html.filter((h) => !q || h.text.includes(q));
+        rowsEl.innerHTML = hit.length ? hit.map((h) => h.row).join("") : `<tr><td colspan="3" class="empty">找不到「${esc(search.value)}」。</td></tr>`;
+        document.getElementById("count").textContent = q ? `找到 ${hit.length} 個` : `共 ${all.length} 個名詞，來自 ${lessons.length} 講`;
+      };
+      search.addEventListener("input", draw);
+      draw();
+    })().catch((e) => {
+      rowsEl.innerHTML = `<tr><td colspan="3" class="empty">${esc(e.message)}</td></tr>`;
+    });
+  </script>
+</body>
+</html>

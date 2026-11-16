@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>關於本站｜生成式 AI 課程講義</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=Noto+Serif+TC:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <main class="page">
+    <article class="prose article">
+      <p class="eyebrow">關於本站</p>
+      <h1>一套規則，讓 AI 每週幫我多長一頁</h1>
+      <p>這是我修「生成式 AI 文字與圖像」的個人講義網站。重點不只是網頁本身，而是專案最外層那份 <a id="agents-link" href="#"><code>AGENTS.md</code></a>：它是給 AI 的員工手冊，寫清楚這個網站的目的、格式、命名和不能做的事。之後每上完一講，我只要對 AI 說一句話，它就能照同一套方式把新講義加進來。</p>
+
+      <h2>新增一講，只要這幾步</h2>
+      <ol class="steps">
+        <li>對 AI 說：「請先讀 AGENTS.md，把第 11 講加進網站。」並附上整理好的講義原稿。</li>
+        <li>AI 照規則建立 <code>notes/lecture-11.md</code>（套用 <code>templates/lecture-template.md</code> 的固定段落），並刪掉人名、Email 等個資。</li>
+        <li>AI 在 <code>notes/lessons.json</code> 最後加一筆目錄資料（標題、一句話摘要、關鍵字）。</li>
+        <li>AI 執行 <code>python tools/check.py</code>，檔名、目錄、固定標題、隱私全部 ✅ 才算完成。</li>
+        <li>首頁卡片、上一講／下一講、名詞總表都會<strong>自動</strong>更新，不需要改任何 HTML。</li>
+      </ol>
+
+      <h2>規則和網頁怎麼對應</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>AGENTS.md 的規則</th><th>網頁上看到的效果</th></tr></thead>
+        <tbody>
+          <tr><td>每講第一行 <code># 第 NN 講｜標題</code></td><td>講義頁的大標題、瀏覽器分頁名稱</td></tr>
+          <tr><td>老師口述寫成 <code>💬 老師補充：</code></td><td>黃色便利貼框，一眼分出「投影片」和「老師說的」</td></tr>
+          <tr><td><code>**最重要的觀念**</code> 段落</td><td>綠色重點框</td></tr>
+          <tr><td>固定標題 <code>## 名詞對照表</code></td><td><a href="glossary.html">名詞總表</a>自動彙整、可搜尋</td></tr>
+          <tr><td>固定標題 <code>## 自我檢核</code></td><td>每題有「我會了」勾選，首頁卡片顯示進度</td></tr>
+          <tr><td>檔名 <code>lecture-NN.md</code>＋<code>lessons.json</code></td><td>首頁卡片、上一講／下一講的順序</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>為什麼這樣設計</h2>
+      <ul>
+        <li><strong>只動兩個地方</strong>：新增內容只碰「新講義檔」和「目錄檔」，AI 不會順手改壞其他頁面。</li>
+        <li><strong>可以執行的檢查</strong>：說「檢查一下」不算驗證（第 10 講），所以把檢查清單寫成 <code>tools/check.py</code>，AI 做完一定要跑。</li>
+        <li><strong>講義是我的筆記，不是 AI 的創作</strong>：規則明確禁止 AI 自己補老師沒說過的話；不確定就標「（待確認）」。</li>
+        <li><strong>換工具也接得上</strong>：<code>CLAUDE.md</code> 只寫 <code>@AGENTS.md</code>，Claude Code、Antigravity、Codex 讀的是同一份規則。</li>
+      </ul>
+
+      <h2>技術</h2>
+      <p>純靜態 HTML＋CSS＋JavaScript，部署在 GitHub Pages；講義是 Markdown，由瀏覽器用 marked 轉成網頁，數學式用 KaTeX、流程圖用 Mermaid。沒有建置步驟，改完推上 GitHub 就是新版。</p>
+    </article>
+  </main>
+  <script src="assets/common.js"></script>
+  <script>
+    renderChrome("about");
+    document.getElementById("agents-link").href = `${SITE.repo}/blob/main/AGENTS.md`;
+  </script>
+</body>
+</html>
