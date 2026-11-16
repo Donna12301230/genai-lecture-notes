@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>生成式 AI 課程講義</title>
-  <meta name="description" content="生成式 AI 文字與圖像課程的個人講義網站：每一講的投影片重點、老師補充、名詞對照與自我檢核。">
+  <meta name="description" content="【TAICA_生成式AI：文字與圖像生成的原理與實務】課程的個人講義網站：每一講的投影片重點、老師補充、名詞對照與自我檢核。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=Noto+Serif+TC:wght@700&display=swap" rel="stylesheet">
@@ -14,8 +14,9 @@
   <main class="page">
     <section class="hero">
       <p class="eyebrow" id="term">課程筆記</p>
-      <h1>生成式 AI 文字與圖像<br>一講一頁的複習講義</h1>
+      <h1>【TAICA_生成式AI：文字與圖像生成的原理與實務】<br>一講一頁的複習講義</h1>
       <p>依投影片架構整理每一講的重點，穿插老師上課的口頭補充（黃色便利貼），最後附名詞對照表與自我檢核題。每上完一講，就照同一套規則新增一頁。</p>
+      <p class="hero-links"><a href="https://yenlung.me/1151GenAI" target="_blank" rel="noopener">📑 課程投影片</a>　<a href="https://www.youtube.com/@ive-iveai/streams" target="_blank" rel="noopener">🎬 上課錄影</a></p>
       <div class="stats">
         <div><b id="stat-lessons">–</b><span>已整理講次</span></div>
         <div><b id="stat-quiz">–</b><span>已勾選「我會了」</span></div>
@@ -55,7 +56,7 @@
 
     loadLessons().then((data) => {
       const lessons = data.lessons;
-      document.getElementById("term").textContent = `${data.course}｜${data.term}`;
+      document.getElementById("term").textContent = `課程筆記｜${data.term}`;
       document.getElementById("stat-lessons").textContent = lessons.length;
       const done = lessons.reduce((s, l) => s + progress(l.id).done, 0);
       const total = lessons.reduce((s, l) => s + progress(l.id).total, 0);

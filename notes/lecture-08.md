@@ -1,6 +1,6 @@
 # 第 08 講｜教 AI 做事的方法：AI Agent 與 Agentic Design Patterns
 
-> 課程：生成式 AI 文字與圖像（115 學年度上學期）
+> 課程：【TAICA_生成式AI：文字與圖像生成的原理與實務】（115 學年度上學期）
 > 資料來源：投影片《08 教 AI 做事的方法》（56 頁）＋ 上課錄影（YouTube：<https://www.youtube.com/watch?v=E8SHIZI1E8A>，約 2 小時 11 分）
 > 說明：本講義依投影片架構整理，並補上老師上課的口頭解說（標示為 💬 老師補充）。
 

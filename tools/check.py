@@ -131,6 +131,15 @@ for l in lessons:
         problems.append(f"疑似個人 Email：{em.group(0)}")
     if PHONE_RE.search(text):
         problems.append("疑似手機號碼")
+    # 相對連結要指向 repo 裡存在的檔案（程式碼區塊與行內程式碼裡的範例不算）
+    plain = re.sub(r"```[\s\S]*?```|`[^`\n]*`", "", text)
+    for target in re.findall(r"\]\(([^)\s]+)\)", plain):
+        if re.match(r"(https?:|mailto:|#)", target):
+            continue
+        if not (ROOT / target.split("#")[0]).exists():
+            problems.append(f"連結指向不存在的檔案：{target}")
+    for media in re.findall(r"[^\s`（(]+\.(?:mp4|m4a|mp3|wav)", plain):
+        problems.append(f"疑似本機影音檔路徑：{media}")
     if KEY_RE.search(text):
         problems.append("疑似 API key")
 

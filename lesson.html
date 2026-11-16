@@ -43,7 +43,7 @@
 
       // 大標題：「第 NN 講」放小字
       const h1 = content.querySelector("h1");
-      if (h1) h1.innerHTML = `<small>第 ${esc(id)} 講</small>${esc(lesson.title)}：${esc(lesson.subtitle)}`;
+      if (h1) h1.innerHTML = `<small>第 ${esc(id)} 講</small>${esc(lesson.title)}${/[？?]$/.test(lesson.title) ? "" : "："}${esc(lesson.subtitle)}`;
       document.title = `第 ${id} 講 ${lesson.title}｜${SITE.name}`;
       document.getElementById("crumb-now").textContent = `第 ${id} 講`;
 

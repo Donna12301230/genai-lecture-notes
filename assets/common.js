@@ -4,6 +4,8 @@
 const SITE = {
   name: "生成式 AI 課程講義",
   repo: "https://github.com/Donna12301230/genai-lecture-notes",
+  videoTitle: "【TAICA_生成式AI：文字與圖像生成的原理與實務】", // 錄影連結的顯示文字（課程全名）
+  slides: "https://yenlung.me/1151GenAI", // 【課程投影片】
 };
 
 /* ---------- 小工具 ---------- */
@@ -196,7 +198,8 @@ function videoBlock(videoId) {
         allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
     </div>
     <p class="video-note">🎬 上課錄影　·　講義裡的「影片約 H:MM」可以點，播放器會跳到那個時間　·
-      <a href="https://www.youtube.com/watch?v=${encodeURIComponent(videoId)}" target="_blank" rel="noopener">在 YouTube 開啟</a></p>`;
+      <a href="https://www.youtube.com/watch?v=${encodeURIComponent(videoId)}" target="_blank" rel="noopener">${SITE.videoTitle}</a>　·
+      <a href="${SITE.slides}" target="_blank" rel="noopener">【課程投影片】</a></p>`;
   const iframe = wrap.querySelector("iframe");
   wrap.seek = (sec) => {
     iframe.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}?start=${sec}&autoplay=1`;
