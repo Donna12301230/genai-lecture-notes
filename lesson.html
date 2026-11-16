@@ -49,6 +49,13 @@
 
       enhanceArticle(content, id);
 
+      // 上課錄影：放在大標題下方；講義裡的時間點可以點
+      if (lesson.video && h1) {
+        const player = videoBlock(lesson.video);
+        h1.after(player);
+        linkTimestamps(content, player.seek);
+      }
+
       // 左側目錄（h2）
       const heads = [...content.querySelectorAll("h2")];
       const mobile = matchMedia("(max-width: 900px)").matches;

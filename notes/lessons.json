@@ -6,71 +6,122 @@
       "id": "01",
       "title": "如何不焦慮地學 AI",
       "subtitle": "用原理站穩腳步，用專業教 AI 做事",
+      "video": "oRPRnGJwA8c",
       "summary": "新名詞再多，大型語言模型的基礎原理沒有太大變化。懂原理，就知道新工具在講什麼，不必每次焦慮地重學。",
-      "tags": ["原理", "Python", "Colab"]
+      "tags": [
+        "原理",
+        "Python",
+        "Colab"
+      ]
     },
     {
       "id": "02",
       "title": "呆萌型 AI 機器人",
       "subtitle": "神經網路與函數學習機",
+      "video": "RijejOES8K8",
       "summary": "所有 AI 都是呆萌型 AI 機器人：先把真實問題化成函數，說清楚輸入與輸出，再用神經網路去學這個函數。",
-      "tags": ["神經網路", "函數", "MNIST"]
+      "tags": [
+        "神經網路",
+        "函數",
+        "MNIST"
+      ]
     },
     {
       "id": "03",
       "title": "AI 為什麼每次都不一樣？",
       "subtitle": "GAN、Cross Entropy 與隨機性",
+      "video": "d7SJtimt3e0",
       "summary": "AI 每次不一樣來自隨機性：GAN 來自一開始抽的 latent vector，語言模型來自依 softmax 機率抽下一個字。",
-      "tags": ["GAN", "Cross Entropy", "softmax"]
+      "tags": [
+        "GAN",
+        "Cross Entropy",
+        "softmax"
+      ]
     },
     {
       "id": "04",
       "title": "LLM 只是在猜下一個字？",
       "subtitle": "簡單核心與驚人效果",
+      "video": "ky59tPI9F9o",
       "summary": "再偉大的模型本質上仍是「看前面的字、預測下一個字」，它只知道怎麼接才順，跟事實無關，所以 prompt 要給對資訊。",
-      "tags": ["LLM", "Prompt", "幻覺"]
+      "tags": [
+        "LLM",
+        "Prompt",
+        "幻覺"
+      ]
     },
     {
       "id": "05",
       "title": "AI 怎麼記得前面說過什麼？",
       "subtitle": "RNN、Attention 與 Transformer",
+      "video": "vmQzpZvVqaI",
       "summary": "Transformer 沒有魔法：一串字平行地互相比較（attention）決定每個位置的記憶，真正訓練的只是幾個矩陣。",
-      "tags": ["RNN", "Attention", "Transformer"]
+      "tags": [
+        "RNN",
+        "Attention",
+        "Transformer"
+      ]
     },
     {
       "id": "06",
       "title": "打造自己的對話機器人",
       "subtitle": "教 AI 用你的方法做事",
+      "video": "C92xN-ENYcM",
       "summary": "AI 生成的都是幻覺，最重要的使用技巧是一定要讀它寫了什麼；讀懂了，才能教 AI 用你的方法做事。",
-      "tags": ["對話機器人", "System Prompt", "Gradio"]
+      "tags": [
+        "對話機器人",
+        "System Prompt",
+        "Gradio"
+      ]
     },
     {
       "id": "07",
       "title": "讓 AI 看懂你的世界",
       "subtitle": "RAG、記憶與 LLM Wiki",
+      "video": "jSNrM7hjhek",
       "summary": "RAG 只是把「提供正確資訊」從人工貼上變成讓電腦自動找；懂原理才知道限制在哪，不被大名詞唬住。",
-      "tags": ["RAG", "Embedding", "LLM Wiki"]
+      "tags": [
+        "RAG",
+        "Embedding",
+        "LLM Wiki"
+      ]
     },
     {
       "id": "08",
       "title": "教 AI 做事的方法",
       "subtitle": "AI Agent 與 Agentic Design Patterns",
+      "video": "E8SHIZI1E8A",
       "summary": "AI Agent 就是教 AI 用我們做事的方法做事；最後收尾的仍是文字接龍的 LLM，重點還是正確資訊加清楚指引。",
-      "tags": ["AI Agent", "Reflection", "Tool Use"]
+      "tags": [
+        "AI Agent",
+        "Reflection",
+        "Tool Use"
+      ]
     },
     {
       "id": "09",
       "title": "換你當老闆",
       "subtitle": "Agentic Work 與 AI 工作現場",
+      "video": "P5-mW2uAH4A",
       "summary": "讓 LLM 能動手的是 Harness：工具、檔案、規則檔、技能。當老闆的重點是說清楚要什麼、有什麼限制、怎麼算做完。",
-      "tags": ["Harness", "AGENTS.md", "LLM Wiki"]
+      "tags": [
+        "Harness",
+        "AGENTS.md",
+        "LLM Wiki"
+      ]
     },
     {
       "id": "10",
       "title": "把你的工作拆成 AI 能做的流程",
       "subtitle": "Loop、Graph 與 Workflow Prototype",
+      "video": "pEmuTl9vTf8",
       "summary": "說「檢查一下」不算驗證、說「做好一點」不算規格。先寫好完成的定義，再決定要不要加上 loop 或 graph。",
-      "tags": ["Loop", "Graph", "Workflow"]
+      "tags": [
+        "Loop",
+        "Graph",
+        "Workflow"
+      ]
     }
-  ]
+  ],
+  "channel": "https://www.youtube.com/@ive-iveai/streams"
 }

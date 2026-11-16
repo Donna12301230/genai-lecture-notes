@@ -185,6 +185,62 @@ function enhanceArticle(root, id) {
   }
 }
 
+/* ---------- 上課錄影 ---------- */
+function videoBlock(videoId) {
+  const wrap = document.createElement("section");
+  wrap.className = "video";
+  wrap.setAttribute("aria-label", "上課錄影");
+  wrap.innerHTML = `<div class="video-frame">
+      <iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}" title="上課錄影"
+        loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    </div>
+    <p class="video-note">🎬 上課錄影　·　講義裡的「影片約 H:MM」可以點，播放器會跳到那個時間　·
+      <a href="https://www.youtube.com/watch?v=${encodeURIComponent(videoId)}" target="_blank" rel="noopener">在 YouTube 開啟</a></p>`;
+  const iframe = wrap.querySelector("iframe");
+  wrap.seek = (sec) => {
+    iframe.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}?start=${sec}&autoplay=1`;
+    wrap.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
+  return wrap;
+}
+
+// 把含「影片」字樣段落裡的 H:MM 或 H:MM:SS 變成可點的時間連結
+function linkTimestamps(root, onSeek) {
+  const re = /(\d{1,2}):(\d{2})(?::(\d{2}))?/g;
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      const el = node.parentElement;
+      if (!el || el.closest("code, pre, a, .katex, .video")) return NodeFilter.FILTER_REJECT;
+      const block = el.closest("p, li, h2, h3, h4, td, blockquote");
+      if (!block || !block.textContent.includes("影片")) return NodeFilter.FILTER_REJECT;
+      re.lastIndex = 0;
+      return re.test(node.data) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+    },
+  });
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach((node) => {
+    const frag = document.createDocumentFragment();
+    let last = 0;
+    node.data.replace(re, (m, h, mm, ss, offset) => {
+      frag.append(node.data.slice(last, offset));
+      const sec = +h * 3600 + +mm * 60 + (ss ? +ss : 0);
+      const a = document.createElement("a");
+      a.href = "#";
+      a.className = "timestamp";
+      a.textContent = m;
+      a.title = `跳到影片 ${m}`;
+      a.addEventListener("click", (e) => { e.preventDefault(); onSeek(sec); });
+      frag.append(a);
+      last = offset + m.length;
+      return m;
+    });
+    frag.append(node.data.slice(last));
+    node.replaceWith(frag);
+  });
+}
+
 /* ---------- 名詞對照表解析（名詞總表用） ---------- */
 function parseGlossary(md) {
   const m = md.split(/^## 名詞對照表\s*$/m)[1];

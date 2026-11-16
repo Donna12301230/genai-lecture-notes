@@ -16,6 +16,7 @@
 
 - **純靜態網站**：HTML ＋ CSS ＋ 原生 JavaScript，部署在 GitHub Pages。**不使用** npm、建置工具、框架（React、Vue 等）、Jekyll。
 - 講義內容是 **Markdown**，由瀏覽器在 `lesson.html` 即時轉成網頁。不要把 Markdown 手動轉成 HTML 檔。
+- 上課錄影用 `youtube-nocookie.com` 的 iframe 嵌入（`assets/common.js` 的 `videoBlock`），不要另外載入 YouTube API。
 - 外部函式庫只用這三個，版本固定、從 jsdelivr 載入，**不要升級或新增**：
   - `marked@12.0.2`（Markdown 轉 HTML）
   - `katex@0.16.11`（數學式 `$…$`、`$$…$$`）
@@ -69,6 +70,8 @@ tools/check.py       ← 完成檢查腳本（每次改完都要跑）
 | `**最重要的觀念**` 段落 | 綠色重點框 |
 | `## 名詞對照表` 表格 | 收進 `glossary.html` 名詞總表，可搜尋 |
 | `## 自我檢核` 清單 | 每題有「我會了」勾選框（記在讀者自己的瀏覽器） |
+| `lessons.json` 的 `video` | 大標題下方嵌入上課錄影（YouTube） |
+| 含「影片」字樣的段落裡的 `H:MM`／`H:MM:SS`（例：`（影片約 2:25 起）`） | 變成可點的時間，播放器跳到那一刻；時間要寫「時:分」，不是「分:秒」 |
 
 ## 5. 新增一講的步驟（SOP）
 
@@ -84,12 +87,14 @@ tools/check.py       ← 完成檢查腳本（每次改完都要跑）
      "id": "11",
      "title": "主標題（不含「第 NN 講」）",
      "subtitle": "副標題",
+     "video": "pEmuTl9vTf8",
      "summary": "一句話摘要，40～70 字，改寫自「最重要的觀念」",
      "tags": ["關鍵字1", "關鍵字2", "關鍵字3"]
    }
    ```
 
    - `id` 和檔名的 `NN` 一致；`title`／`subtitle` 和講義第一行一致。
+   - `video` 是上課錄影的 **YouTube 影片 ID（11 個字元）**，不是整串網址：`https://www.youtube.com/live/pEmuTl9vTf8?si=…` → 取 `live/` 後面、`?` 前面的 `pEmuTl9vTf8`。`?si=` 是分享追蹤碼，不要留。錄影都在課程頻道 <https://www.youtube.com/@ive-iveai/streams>；使用者沒給連結就先問，不要猜。講義第一段「資料來源」裡的錄影連結要和這個 ID 一致。
    - `tags` 2～4 個，優先用名詞對照表裡出現的詞。
 5. **跑檢查**：`python tools/check.py`，全部 ✅ 才算完成；有 ❌ 就修到沒有。
 6. **本機預覽**：`python -m http.server 8000`，打開 `http://localhost:8000/lesson.html?id=NN` 看一次（直接雙擊 html 檔會讀不到 Markdown）。
@@ -128,8 +133,8 @@ tools/check.py       ← 完成檢查腳本（每次改完都要跑）
 - [ ] `notes/` 裡每個 `lecture-NN.md` 都登記在 `lessons.json`，反之亦然
 - [ ] 檔名、`id`、講義第一行的講次三者一致
 - [ ] 每份講義都有「本講重點總覽」「名詞對照表」「自我檢核」三個固定標題
-- [ ] 講義第一行標題和 `lessons.json` 的 title／subtitle 一致
+- [ ] 講義第一行標題和 `lessons.json` 的 title／subtitle 一致；`video` 是 11 字元 ID，且和資料來源的錄影連結一致
 - [ ] 沒有 Email、電話、疑似 API key 的字串
-- [ ] 本機預覽：新講義能打開、數學式和流程圖有正常顯示
+- [ ] 本機預覽：新講義能打開、數學式和流程圖有正常顯示、錄影播得出來
 - [ ] 首頁出現新卡片、上一講／下一講連得到、名詞總表有新的名詞
 - [ ] 手機寬度看一次沒有跑版

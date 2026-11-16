@@ -108,6 +108,17 @@ for l in lessons:
     if not 5 <= n_q <= 25:
         problems.append(f"自我檢核有 {n_q} 題（應為 5～25 題）")
 
+    video = l.get("video", "")
+    if not video:
+        warn(f"第 {lid} 講沒有 video（上課錄影 ID）")
+    elif not re.fullmatch(r"[A-Za-z0-9_-]{11}", video):
+        problems.append(f"video 應該是 11 字元的 YouTube ID，不是網址：{video}")
+    else:
+        head = "\n".join(text.splitlines()[:8])
+        linked = re.findall(r"(?:live/|youtu\.be/|[?&]v=)([A-Za-z0-9_-]{11})", head)
+        if linked and video not in linked:
+            problems.append(f"資料來源的錄影連結（{linked[0]}）和 video（{video}）不一致")
+
     summary = l.get("summary", "")
     if summary and not 30 <= len(summary) <= 80:
         warn(f"第 {lid} 講 summary 有 {len(summary)} 字（建議 40～70 字）")
