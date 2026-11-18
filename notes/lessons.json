@@ -121,6 +121,19 @@
         "Graph",
         "Workflow"
       ]
+    },
+    {
+      "id": "11",
+      "title": "從 VAE 開始的冒險旅程",
+      "subtitle": "VAE、Diffusion 與圖像生成原理",
+      "video": "3--Y_WQyrfo",
+      "summary": "Diffusion 用算的一路加雜訊，只訓練會預測雜訊的 decoder；先用 VAE 把圖壓小再做，就是 Stable Diffusion。",
+      "tags": [
+        "VAE",
+        "Diffusion Model",
+        "Stable Diffusion",
+        "U-Net"
+      ]
     }
   ],
   "channel": "https://www.youtube.com/@ive-iveai/streams"
